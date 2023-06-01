@@ -12,8 +12,11 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { useSelector } from "react-redux";
 
 export const SideBar = ({ drawerWidth = 240 }) => {
+  const { displayName, photoURL } = useSelector((state) => state.auth); //voy a buscar al authSlice
+
   return (
     <Box
       component="nav"
@@ -28,8 +31,18 @@ export const SideBar = ({ drawerWidth = 240 }) => {
         }}
       >
         <Toolbar>
+          {/* si tiene foto muestra sino no muestra */}
+          {photoURL && (
+            <Box sx={{ pr: 1 }}>
+              <img
+                src={photoURL}
+                style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+                alt="User"
+              />
+            </Box>
+          )}
           <Typography variant="h6" noWrap component="div">
-            Elian Enria
+            {displayName}
           </Typography>
         </Toolbar>
         <Divider />
