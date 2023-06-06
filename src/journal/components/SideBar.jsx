@@ -1,11 +1,11 @@
 import { Box, Divider, Drawer, List, Toolbar, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { SideBarItem } from "./SideBarItem";
+import { useEffect } from "react";
 
 export const SideBar = ({ drawerWidth = 240 }) => {
   const { displayName, photoURL } = useSelector((state) => state.auth); //voy a buscar al authSlice
-  const { notes } = useSelector( state => state.journal );
-  // const objNotes = Object.values(notes);
+  const { notes } = useSelector((state) => state.journal);
 
   return (
     <Box
@@ -37,11 +37,9 @@ export const SideBar = ({ drawerWidth = 240 }) => {
         </Toolbar>
         <Divider />
         <List>
-          {notes.map((note) => (
-            <SideBarItem key={note.id} {...note} />
-          ))}
-          {/* {Array.isArray(objNotes) &&
-            objNotes.map((note) => <SideBarItem key={note.id} {...note} />)} */}
+          {
+            notes.map((note) => <SideBarItem key={note.id} {...note} />)
+          }
         </List>
       </Drawer>
     </Box>
