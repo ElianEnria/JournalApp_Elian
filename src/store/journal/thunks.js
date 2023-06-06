@@ -5,10 +5,11 @@ import {
   savingNewNote,
   setActiveNote,
   setNotes,
+  setPhotosToActiveNote,
   setSaving,
   updateNote,
 } from "./";
-import { loadNotes } from "../../helpers";
+import { fileUpload, loadNotes } from "../../helpers";
 export const startNewNote = () => {
   return async (dispatch, getState) => {
     const { uid } = getState().auth;
@@ -53,5 +54,18 @@ export const startSaveNote = () => {
     await setDoc(docRef, noteToFireStore, { merge: true });
 
     dispatch(updateNote(note));
+  };
+};
+
+export const startUpLoadingFiles = (files = []) => {
+  return async (dispatch) => {
+    dispatch(setSaving());
+    // await fileUpload(files[0])
+    const fileUploadPromise = [];
+    for (const file of files) {
+      fileUploadPromise.push(fileUpload(file));
+    }
+    const photosURLs= await Promise.all(fileUploadPromise);
+    dispatch(setPhotosToActiveNote(photosURLs));
   };
 };
