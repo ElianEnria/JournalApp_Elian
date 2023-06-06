@@ -1,7 +1,6 @@
 import { Box, Divider, Drawer, List, Toolbar, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { SideBarItem } from "./SideBarItem";
-import { useEffect } from "react";
 
 export const SideBar = ({ drawerWidth = 240 }) => {
   const { displayName, photoURL } = useSelector((state) => state.auth); //voy a buscar al authSlice

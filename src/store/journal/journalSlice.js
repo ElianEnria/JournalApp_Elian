@@ -31,37 +31,36 @@ export const journalSlice = createSlice({
             state.notes = action.payload;
         },
         setSaving: (state ) => {
-            state.isSaving = true;
-            state.messageSaved = '';
+           state.isSaving = true;
+           //Todo: mensaje de error
         },
         updateNote: (state, action ) => { // payload: note
             state.isSaving = false;
             state.notes = state.notes.map( note => {
-
                 if ( note.id === action.payload.id ) {
                     return action.payload;
                 }
-
                 return note;
-            });
+                
+            })
+            
+            state.messageSaved = 'Nota actualizada';
+            
+        },
+        // setPhotosToActiveNote: (state, action) => {
+        //     state.active.imageUrls = [ ...state.active.imageUrls, ...action.payload ]; 
+        //     state.isSaving = false;
+        // },
 
-            state.messageSaved = `${ action.payload.title }, actualizada correctamente`;
-        },
-        setPhotosToActiveNote: (state, action) => {
-            state.active.imageUrls = [ ...state.active.imageUrls, ...action.payload ]; 
-            state.isSaving = false;
-        },
-
-        clearNotesLogout: (state) => {
-            state.isSaving = false;
-            state.messageSaved = '';
-            state.notes = [];
-            state.active = null;
-        },
+        // clearNotesLogout: (state) => {
+        //     state.isSaving = false;
+        //     state.messageSaved = '';
+        //     state.notes = [];
+        //     state.active = null;
+        // },
 
         deleteNoteById: (state, action ) => {
-            state.active = null;
-            state.notes = state.notes.filter( note => note.id !== action.payload );
+            
         },
     }
 });
@@ -70,12 +69,12 @@ export const journalSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const { 
     addNewEmptyNote,
-    clearNotesLogout,
+    // clearNotesLogout,
     deleteNoteById, 
     savingNewNote,
     setActiveNote,
     setNotes,
-    setPhotosToActiveNote,
+    // setPhotosToActiveNote, 
     setSaving,
     updateNote,
 } = journalSlice.actions;
