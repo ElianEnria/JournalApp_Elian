@@ -1,5 +1,6 @@
 import { SaveOutlined } from "@mui/icons-material";
 import { Button, Grid, TextField, Typography } from "@mui/material";
+import Swal from "sweetalert2";
 import { ImageGallery } from "../components/Index";
 import { useForm } from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +10,11 @@ import { setActiveNote, startSaveNote } from "../../store/journal";
 export const NoteView = () => {
   const dispatch = useDispatch();
 
-  const { active: note } = useSelector((state) => state.journal);
+  const {
+    active: note,
+    messageSaved,
+    isSaving,
+  } = useSelector((state) => state.journal);
   const { body, title, onInputChange, formState, date } = useForm(note);
   const dateString = useMemo(() => {
     const newDate = new Date(date);
@@ -32,10 +37,30 @@ export const NoteView = () => {
     dispatch(setActiveNote(formState));
   }, [formState]);
 
+  useEffect(() => {
+    if (messageSaved.length > 0) {
+      Swal.fire({
+        title: "Nota actualizada",
+        width: 600,
+        icon: "success",
+        text: messageSaved,
+        padding: "3em",
+        color: "#716add",
+        background: "#fff",
+        backdrop: `
+          rgba(0,0,123,0.4)
+          url("https://sweetalert2.github.io/images/nyan-cat.gif")
+          left top
+          no-repeat
+        `,
+        confirmButtonText: "Cerrar",
+      });
+    }
+  }, [messageSaved]);
+
   const onSaveNote = () => {
     dispatch(startSaveNote());
-  }
-
+  };
 
   return (
     <Grid
@@ -51,8 +76,9 @@ export const NoteView = () => {
       </Typography>
       <Grid item>
         <Button
-          onClick={onSaveNote} 
-          color="primary" 
+          disabled={isSaving}
+          onClick={onSaveNote}
+          color="primary"
           sx={{ padding: 2 }}
         >
           <SaveOutlined sx={{ fontSize: 30, mr: 1 }} />

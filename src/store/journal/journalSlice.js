@@ -32,7 +32,7 @@ export const journalSlice = createSlice({
         },
         setSaving: (state ) => {
            state.isSaving = true;
-           //Todo: mensaje de error
+           state.messageSaved = '';
         },
         updateNote: (state, action ) => { // payload: note
             state.isSaving = false;
@@ -44,7 +44,7 @@ export const journalSlice = createSlice({
                 
             })
             
-            state.messageSaved = 'Nota actualizada';
+            state.messageSaved = `${action.payload.title}, actualizada correctamente`;
             
         },
         // setPhotosToActiveNote: (state, action) => {
