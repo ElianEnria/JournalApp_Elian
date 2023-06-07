@@ -15,7 +15,8 @@ export const ImageGallery = ({images}) => {
           rows={image.rows || 1}
         >
           <img
-            {...srcset(image.img, 121, image.rows, image.cols)}
+            src= {`${image}?w=164&h=164&fit=crop&auto=format`}
+            srcSet= {`${image}?w=164&h=164&&fit=crop&auto=format&dpr=2 2x`}
             alt='imagen de la nota'
             loading="lazy"
           />
