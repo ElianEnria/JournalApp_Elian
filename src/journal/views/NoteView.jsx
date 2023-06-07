@@ -5,17 +5,23 @@ import { ImageGallery } from "../components/Index";
 import { useForm } from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo } from "react";
-import { setActiveNote, startSaveNote, startUpLoadingFiles } from "../../store/journal";
+import {
+  setActiveNote,
+  startSaveNote,
+  startUpLoadingFiles,
+} from "../../store/journal";
 
 export const NoteView = () => {
   const dispatch = useDispatch();
 
   const {
-    active: note,
+    active:note,
     messageSaved,
     isSaving,
   } = useSelector((state) => state.journal);
+
   const { body, title, onInputChange, formState, date } = useForm(note);
+
   const dateString = useMemo(() => {
     const newDate = new Date(date);
     const options = {
@@ -63,11 +69,10 @@ export const NoteView = () => {
   };
 
   const onFileInputChange = ({ target }) => {
-    if(target.files===0)return;
+    if (target.files === 0) return;
 
     dispatch(startUpLoadingFiles(target.files));
-  }
-
+  };
 
   return (
     <Grid
@@ -132,7 +137,7 @@ export const NoteView = () => {
           onChange={onInputChange}
         />
       </Grid>
-      <ImageGallery />
+      <ImageGallery images={note.imageUrls} />
     </Grid>
   );
 };

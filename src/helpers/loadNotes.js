@@ -7,11 +7,22 @@ export const loadNotes = async (uid = "") => {
   const collectionRef = collection(FirebaseDB, `${uid}/journal/notes`);
   const docs = await getDocs(collectionRef);
 
-  const notes = [];
-  docs.forEach((doc) => {
-    // console.log(doc.id, " => ", doc.data());
-    notes.push({ id: doc.id, ...doc.data() });
-  });
-  // console.log(notes);
-  return notes;
+    const notes = [];
+    docs.forEach((doc) => {
+      // console.log(doc.id, " => ", doc.data());
+      notes.push({ id: doc.id, ...doc.data() });
+    });
+    // console.log(notes);
+    return notes;
+  // const notes = [];
+  // docs.forEach((doc) => {
+  //   notes.push({
+  //     id: doc.id,
+  //     body: doc.data().body,
+  //     title: doc.data().title,
+  //     date: doc.data().date,
+  //     imageUrl: doc.data().imageUrl || [],
+  //   });
+  // });
+  // return notes;
 };
